@@ -10,7 +10,7 @@ Repo: [github.com/kathan07/cursor-dev-kit](https://github.com/kathan07/cursor-de
 
 Two layers:
 
-1. **Env readiness** — coding standards bootstrap, Serena setup, always-on agent behavior (caveman, Ponytail, token-saviour, agent-stack).
+1. **Env readiness** — coding standards bootstrap, Serena MCP, official **Caveman** Cursor bind, Ponytail / token-saviour / agent-stack.
 2. **Dev pipeline** — Task Card → plan → wave execute → optional change handoff (`task-formatter`, `dev-planner`, `dev-executor`, `explorer`, `change-handoff`).
 
 ## Quick start
@@ -21,23 +21,48 @@ cd cursor-dev-kit
 ```
 
 1. Open this folder in **Cursor**.
-2. Run **`/install-dev-kit`** (or `./install.sh` in a terminal).
-3. If Serena MCP was added, reload MCP / restart Cursor agents so the server appears.
+2. Run **`/install-dev-kit`** (or `./install.sh` in a terminal). Needs **Node 18+ / `npx`** for Caveman, and network.
+3. Reload Cursor / start a **new chat** so the Caveman session hook applies. Reload MCP if Serena was added.
 4. In each **application** repo (not this kit):
    - `/bootstrap-coding-standards`
    - `/setup-serena`
 
-Installer copies packs into `~/.cursor/skills`, `~/.cursor/rules`, and `~/.cursor/agents`. Same-named items are backed up under `~/.cursor/dev-kit-backup/<timestamp>/`. Serena is merged into `~/.cursor/mcp.json` only when the `serena` key is missing.
+### What the installer does
+
+1. **Cleanup** leftover Caveman that fights the official hook:
+   - `~/.cursor/rules/caveman.mdc`, kit `~/.cursor/skills/caveman`, incomplete `~/.cursor/caveman`
+   - `~/.agents/skills/caveman`, `caveman-*`, `cavecrew` (backed up under `~/.agents/dev-kit-backup/<ts>/`)
+2. Copies kit skills / rules / agents into `~/.cursor` (does **not** install a kit `caveman.mdc` or kit caveman skill — official owns those).
+3. Merges Serena into `~/.cursor/mcp.json` if `serena` is missing.
+4. Runs official [JuliusBrussee/caveman](https://github.com/JuliusBrussee/caveman) pinned to **`v4.1.0`**:  
+   `npx -y github:JuliusBrussee/caveman#v4.1.0 -- --only cursor`  
+   (on npm 12+, installer adds `--allow-git=root` automatically)
+5. Restores the **rtk** shell hook if Caveman install dropped it.
+
+Backups: `~/.cursor/dev-kit-backup/<timestamp>/`.
+
+**Do not** re-add an always-on `caveman.mdc` rule — hook + rule doubles Caveman instructions.
+
+## Caveman + dev pipeline
+
+With the official session hook, new chats may start in caveman. The **dev pipeline** still keeps stages **1–2** readable:
+
+| Stage | Prose |
+|-------|--------|
+| 1 Task Card / 2 Execution Plan | `CAVEMAN_OVERRIDE: off` — full reviewable markdown |
+| 3 Execution Report / 4 Handoff summary | caveman on (compact) |
+
+Cavecrew agents from the official install may appear alongside pipeline agents (different names).
 
 ## Slash commands
 
 | Command | Purpose |
 |---------|---------|
-| `/install-dev-kit` | Install this kit into `~/.cursor` (+ merge Serena MCP) |
+| `/install-dev-kit` | Install kit + cleanup leftovers + official Caveman + Serena merge |
 | `/bootstrap-coding-standards` | Seed/customize `.cursor/standards/` for the current repo |
 | `/align-coding-standards` | Update standards + align a code Scope |
 | `/setup-serena` | Write `.serena/project.yml`, activate, onboard, warm index |
-| `/caveman` | Terse chat mode (via caveman skill) |
+| `/caveman` | Caveman modes (from official skill / hook) |
 
 ## Skills (also auto / task-triggered)
 
@@ -49,45 +74,48 @@ Installer copies packs into `~/.cursor/skills`, `~/.cursor/rules`, and `~/.curso
 | `change-handoff` | Branch/PR/commit impact docs |
 | `token-saviour` | Prefer Serena / rtk / caveman / Ponytail for fewer tokens |
 | `agent-stack` | STACK block for child agents |
-| `caveman` | Compressed communication |
+
+`skills/caveman/` remains in this repo as a **reference copy only**; live Caveman comes from the official installer.
 
 ## Agents (`~/.cursor/agents`)
 
-Spawned by the pipeline / Task tool:
+Pipeline:
 
-- `task-formatter`
-- `dev-planner`
-- `dev-executor`
-- `explorer`
-- `change-handoff`
+- `task-formatter`, `dev-planner`, `dev-executor`, `explorer`, `change-handoff`
+
+Official Caveman may also add **Cavecrew** presets.
 
 ## Always-on rules
 
 Installed under `~/.cursor/rules/`:
 
-- `agent-stack`, `token-saviour`, `caveman`, `ponytail`
+- `agent-stack`, `token-saviour`, `ponytail`
 - `coding-standards` (+ node / go / java / dotnet packs)
 - `explorer`, `dev-pipeline`, `change-handoff`
+
+Caveman always-on = **official session hook**, not a kit `.mdc`.
 
 ## Dependencies
 
 | Dependency | Required? | Notes |
 |------------|-----------|--------|
 | [Cursor](https://cursor.com) | Yes | Host for skills, rules, agents, MCP |
-| [uv](https://docs.astral.sh/uv/) / `uvx` | For Serena | Used by the Serena MCP server entry |
-| [Serena](https://github.com/oraios/serena) | Recommended | Installed via `uvx --from git+…` in MCP config |
-| `rtk` | Optional | Soft-checked by installer; used by token-saviour / stack workflows |
+| Node 18+ / `npx` | For Caveman | Official `--only cursor` bind |
+| [uv](https://docs.astral.sh/uv/) / `uvx` | For Serena | MCP server entry |
+| [Serena](https://github.com/oraios/serena) | Recommended | Via `uvx --from git+…` |
+| `rtk` | Optional | Soft-checked; shell hook preserved when possible |
+| [Caveman](https://github.com/JuliusBrussee/caveman) | Via installer | Pinned `v4.1.0` |
 
 Example Serena MCP snippet: [`mcp/serena.mcp.json.example`](mcp/serena.mcp.json.example).
 
 ## Repo layout
 
 ```text
-skills/          # Cursor skills (source + post-install personal copy)
-rules/           # Always-on .mdc rules
-agents/          # Subagent definitions
+skills/          # Kit skills (caveman/ is reference-only for install)
+rules/           # Always-on .mdc rules (no caveman.mdc)
+agents/          # Pipeline subagents
 mcp/             # MCP examples
-install.sh       # Idempotent installer
+install.sh       # Cleanup + kit copy + official Caveman + Serena
 .cursor/skills/install-dev-kit/   # Project slash skill for first-run
 ```
 
@@ -98,8 +126,8 @@ install.sh       # Idempotent installer
 /setup-serena
 ```
 
-Then use the **dev pipeline** for feature work (e.g. ask to “run the dev pipeline” or follow the `dev-pipeline` skill).
+Then use the **dev pipeline** for feature work (e.g. ask to “run the dev pipeline”).
 
 ## Updating
 
-Pull latest `cursor-dev-kit`, open it (or point `/install-dev-kit` at the clone), run `/install-dev-kit` again. Previous copies of overwritten skills/rules/agents are kept in the backup folder.
+Pull latest `cursor-dev-kit`, open it, run `/install-dev-kit` again. Overwrites are backed up under the backup folders above.

@@ -20,7 +20,7 @@ Isolated session — parent rules may NOT apply. Use:
 | Scout | **explorer** once if text too vague |
 | Symbols | **Serena** only if one lookup names the domain |
 | Shell | **rtk** if any command needed |
-| Prose | **caveman** — keep Task Card compact |
+| Prose | **CAVEMAN_OVERRIDE: off** for the Task Card (approval artifact). Readable structured markdown — compact in scope/length, **not** caveman grammar. Tool scratch may stay terse. |
 | Standards | **coding-standards** only if user mentioned branches/files |
 | Routing | **token-saviour** — prefer plain tools for this light stage |
 

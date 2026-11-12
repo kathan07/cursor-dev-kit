@@ -29,7 +29,7 @@ Isolated session — parent rules may NOT apply. You MUST use:
 | Standards | **coding-standards** | Packs from Task Card Job type (universal + language + domain) |
 | Routing | **token-saviour** | Serena/explorer before mass file reads |
 
-**Prose rule:** Use caveman only for tool scratch / parent chatter. The **Execution Plan artifact itself is NOT caveman** — write clear Plan-mode markdown (full sentences, tables, diagrams) for human review.
+**Prose rule / CAVEMAN_OVERRIDE:** `off` for the Execution Plan body. Official Caveman session hooks may be active — ignore them for this artifact. Write clear Plan-mode markdown (full sentences, tables, diagrams) for human review. Use caveman only for tool scratch / incidental chatter, never for the plan document.
 
 Spawn read-only helpers only. Never spawn executor. Degrade gracefully if tools missing.
 

@@ -21,6 +21,10 @@ All Job types (`app` | `script` | `ai-eng` | `cloud` | `mixed`) use this pipelin
 4. On **continue** / next wave → spawn **fresh** `dev-executor` for that wave (never implement remaining waves in main)
 5. On user ask → spawn `change-handoff`
 
+## Caveman by stage
+
+Stage **1–2** artifacts and their main-chat pastes are **caveman off** (`CAVEMAN_OVERRIDE: off`) so Task Card / Execution Plan stay full and reviewable even when the official Caveman session hook is active. Stages **3–4** use caveman for compact reports/summaries.
+
 ## Stage 3 spawn (hard — Build / approve / implement / continue)
 
 These user/UI signals mean **spawn `dev-executor`**, not code in main:

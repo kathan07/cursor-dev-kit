@@ -24,6 +24,7 @@ Rules:
 5. Follow coding-standards packs for Job type / touched language; repo-local conventions win; do not invent idioms for unknown languages.
 6. If a tool is missing, degrade to plain tools — never pretend it ran.
 7. Return only your stage artifact to the parent.
+8. When the parent prompt sets **CAVEMAN_OVERRIDE: off** for an approval artifact (Task Card / Execution Plan), that overrides the default “Prose → caveman” row for that artifact only — write full, reviewable markdown.
 ```
 
 ## Agent frontmatter policy

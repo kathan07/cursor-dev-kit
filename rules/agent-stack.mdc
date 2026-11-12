@@ -18,3 +18,5 @@ Spawned subagents may **not** inherit always-on rules. Give them stack access ex
 Serena · rtk · explorer · caveman · Ponytail · token-saviour · coding-standards · change-handoff (when documenting)
 
 Do not assume parent caveman/Ponytail/token-saviour rules alone cover children.
+
+When the parent sets `CAVEMAN_OVERRIDE: off` (dev-pipeline stages 1–2 approval artifacts), that overrides STACK prose for that artifact only.

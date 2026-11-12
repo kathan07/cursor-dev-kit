@@ -99,7 +99,27 @@ The user must see the **entire** Execution Plan in the main chat thread **before
 
 **If Multitask Mode forces background:** on completion, paste the full plan body into main chat in that turn.
 
-**Caveman exception:** always-on caveman / token-saviour do **not** apply to stage 1–2 approval messages.
+## Stage prose mode (dynamic Caveman)
+
+Official Caveman session hooks may start chats in caveman. Pipeline **overrides by stage** so approval artifacts stay understandable:
+
+| Stage | Artifact | Prose mode |
+|-------|----------|------------|
+| 1 Task Card | Approvals paste | **caveman off** — clear structured markdown humans can approve |
+| 2 Execution Plan | Approvals paste | **caveman off** — full Plan-mode prose, tables, waves |
+| 3 Execution Report | Report | caveman on (compact) |
+| 4 Handoff | Doc + chat summary | caveman on for summary; doc stays exact paths/SHAs |
+
+When pasting stage 1–2 into main chat: never caveman-compress the artifact or the approve prompt framing. After the user **approves** stage 2 / moves to execute: resume normal STACK caveman for orchestrator chatter and stages 3+.
+
+Include this block on **every stage 1–2 spawn** (and treat it as binding for the returned artifact):
+
+```text
+CAVEMAN_OVERRIDE: off for this stage artifact.
+Official Caveman session hook may be active — ignore it for the Task Card / Execution Plan body.
+Write full, reviewable markdown. Do not drop articles/structure to save tokens.
+Tool scratch may stay terse.
+```
 
 ## Spawn prompt templates
 
@@ -109,23 +129,32 @@ Include this STACK header on every spawn (from `agent-stack/references/STACK.md`
 Apply agent-stack STACK (mandatory): Serena, rtk, explorer, caveman, Ponytail,
 token-saviour, coding-standards (universal + language/domain packs as applicable).
 Parent rules may not apply.
+When CAVEMAN_OVERRIDE: off is set, that overrides STACK prose for the stage artifact.
 ```
 
 ### Stage 1
 ```
 Use task-formatter.
 STACK: Serena/rtk/explorer/caveman/Ponytail/token-saviour/coding-standards as applicable.
+CAVEMAN_OVERRIDE: off for this stage artifact.
+Official Caveman session hook may be active — ignore it for the Task Card body.
+Write full, reviewable markdown. Do not drop articles/structure to save tokens.
+Tool scratch may stay terse.
 Raw request:
 <user text>
 Return only the Task Card (include Job type, Standards packs, Delivery slice).
 ```
-Parent: `run_in_background: false`. Paste full Task Card, then approve prompt.
+Parent: `run_in_background: false`. Paste full Task Card (**caveman off**), then approve prompt.
 
 ### Stage 2
 ```
 Use dev-planner.
 STACK: mandatory — spawn explorer; Serena; rtk; coding-standards packs from Task Card;
 LLD from lld-patterns.md catalog for Job type (+ domain ref).
+CAVEMAN_OVERRIDE: off for this stage artifact.
+Official Caveman session hook may be active — ignore it for the Execution Plan body.
+Write full, reviewable markdown. Do not drop articles/structure to save tokens.
+Tool scratch may stay terse.
 Approved Task Card:
 <card>
 Return only a Plan-mode-quality Execution Plan markdown (YAML frontmatter with
@@ -138,7 +167,7 @@ Read-only. No code edits.
 Your final message MUST be the complete plan document only — parent will paste
 it verbatim into the user chat for approval.
 ```
-Parent: `run_in_background: false`. Paste **full** plan (not summary), then approve prompt.
+Parent: `run_in_background: false`. Paste **full** plan (**caveman off**, not summary), then approve prompt.
 
 ### Stage 3
 Parent: **first** tool call is Task `dev-executor`. Do not edit code in parent.
@@ -179,7 +208,7 @@ Return Path + short summary + Gaps (full doc in the file).
 | Symbols / edits | Serena |
 | Shell noise | rtk |
 | Lean implementation | Ponytail |
-| Terse prose | caveman (not on stage 1–2 approval paste) |
+| Terse prose | caveman (stages 3–4); **CAVEMAN_OVERRIDE: off** on stage 1–2 artifacts |
 | Token routing | token-saviour |
 | Final doc | `change-handoff` |
 | Standards | `coding-standards` packs by Job type; LLD = `lld-patterns.md` + domain refs; comments = `comments.md` |
