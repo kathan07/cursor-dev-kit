@@ -1,0 +1,11 @@
+---
+description: .NET/C# naming, async, DI, and API/worker coding standards.
+globs: "**/*.{cs,csproj,fs,fsproj,vb}"
+alwaysApply: false
+---
+
+# .NET standards
+
+Apply `coding-standards` references: `naming.md`, `coding.md`, plus `api-services.md` or `background-services.md` by project type.
+
+Hard requirements: nullable aware; async all the way; thin controllers; XML docs on public APIs; Conventional Commits on save/PR.

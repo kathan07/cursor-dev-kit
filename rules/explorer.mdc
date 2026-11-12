@@ -1,0 +1,24 @@
+---
+description: Delegate recon to the explorer subagent before planning multi-file work.
+alwaysApply: true
+---
+
+# Explorer routing
+
+Before large or ambiguous coding work, **delegate exploration** to the `explorer` subagent. Keep raw Grep/Glob dumps out of the main thread when a map is needed.
+
+## Trigger
+
+Use explorer when:
+- Task spans multiple files/modules
+- Ownership or entrypoint is unclear
+- You are about to write a plan, todos, or handoff for another agent
+- User says explore / scout / map / where does X live (broad)
+
+Skip when exact `path` + symbol is already known — one Serena/Read is enough.
+
+## Handoff
+
+Ask explorer for an **Insight Brief** (citations, flow, blast radius, risks, task breakdown, gaps). Then plan/execute from that brief. Do not re-explore from scratch.
+
+Explorer is read-only. Implementation stays with the main/executor agent (Ponytail for lean code). Prefer Serena inside explorer for symbols.

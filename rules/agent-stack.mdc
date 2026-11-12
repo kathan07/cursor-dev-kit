@@ -1,0 +1,20 @@
+---
+description: Ensure spawned child agents get Serena/rtk/caveman/Ponytail/token-saviour/coding-standards stack.
+alwaysApply: true
+---
+
+# Child agent stack access
+
+Spawned subagents may **not** inherit always-on rules. Give them stack access explicitly.
+
+## When spawning Task / any subagent
+
+1. Prefer `~/.cursor/agents/*` agents (they embed STACK).
+2. Paste the STACK block from skill `agent-stack` → `references/STACK.md` into the child prompt (dev-pipeline templates already include it).
+3. For built-in `explore` / `generalPurpose`, always paste STACK.
+
+## Stack tools children must use
+
+Serena · rtk · explorer · caveman · Ponytail · token-saviour · coding-standards · change-handoff (when documenting)
+
+Do not assume parent caveman/Ponytail/token-saviour rules alone cover children.

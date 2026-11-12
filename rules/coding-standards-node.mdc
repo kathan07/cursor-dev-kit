@@ -1,0 +1,11 @@
+---
+description: Node/TypeScript naming, strict TS, and API/worker coding standards.
+globs: "**/*.{ts,tsx,js,jsx,mjs,cjs}"
+alwaysApply: false
+---
+
+# Node / TypeScript standards
+
+Apply `coding-standards` references: `naming.md`, `coding.md`, plus `api-services.md` or `background-services.md`.
+
+Hard requirements: `strict` types; no floating promises; validate at edge; kebab-case files; central error handler.

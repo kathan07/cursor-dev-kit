@@ -1,0 +1,11 @@
+---
+description: Java naming, DI, and API/worker coding standards.
+globs: "**/*.{java,gradle,kts}"
+alwaysApply: false
+---
+
+# Java standards
+
+Apply `coding-standards` references: `naming.md`, `coding.md`, plus `api-services.md` or `background-services.md`.
+
+Hard requirements: constructor injection; try-with-resources; Javadoc on public APIs; no entity leak through REST.

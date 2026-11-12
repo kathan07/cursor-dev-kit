@@ -1,0 +1,58 @@
+---
+description: >-
+  Dev pipeline: spawn stage agents; never implement in main. Intercept Build /
+  approve / execute / continue wave after a plan. All Job types use this pipeline.
+alwaysApply: true
+---
+
+# Dev pipeline routing
+
+When the user wants end-to-end delivery from raw text (“dev pipeline”, “pipeline this”, unstructured build request with approvals), run the **dev-pipeline** skill.
+
+Also treat as active pipeline when this chat already has a Task Card and/or Execution Plan awaiting or past approval.
+
+All Job types (`app` | `script` | `ai-eng` | `cloud` | `mixed`) use this pipeline; standards packs come from the Task Card.
+
+## Flow
+
+1. Spawn `task-formatter` **sync** → paste full Task Card → **user approve**
+2. `SwitchMode` → **plan** → spawn `dev-planner` **sync** (`run_in_background: false`) → paste **full** Plan-mode Execution Plan (incl. Waves) in chat → **user approve**
+3. On execute signal → spawn `dev-executor` for **Assigned wave** (default `wave-1`) → paste Execution Report → **user ack / continue / stop**
+4. On **continue** / next wave → spawn **fresh** `dev-executor` for that wave (never implement remaining waves in main)
+5. On user ask → spawn `change-handoff`
+
+## Stage 3 spawn (hard — Build / approve / implement / continue)
+
+These user/UI signals mean **spawn `dev-executor`**, not code in main:
+
+- Plan UI **Build** / `build`
+- `approve` after an Execution Plan was shown → **wave-1**
+- `implement`, `execute`, `run stage 3`, `skip to execute`
+- `continue`, `next wave` → next wave from report
+- `SwitchMode` → agent after a pipeline plan exists in this chat
+
+**Main session MUST:**
+1. First tool call = Task `subagent_type=dev-executor` with STACK + Task Card + plan + **Assigned wave** + todo ids (+ prior report summary if wave > 1)
+2. Prefer `run_in_background: true` for executor (unless user asked sync)
+3. Wait for / receive Execution Report; paste it; ask ack/continue/stop
+4. Stay orchestrator only — no product implementation
+5. One executor at a time; fresh spawn per wave
+
+**Main session MUST NOT (while pipeline execute is requested):**
+- Edit product code (Write / StrReplace / Serena symbol edits / apply_patch)
+- “Just implement the plan myself” because Build is faster
+- Finish leftover waves inline when a child hits context limits
+- Skip Task and work inline
+- Re-plan unless user said `revise`
+- Spawn parallel executors for the same plan
+
+If you already started editing in main by mistake: **stop**, spawn `dev-executor` with the approved plan, and say main will not continue the implementation.
+
+## Hard rules
+
+- Heavy work in **subagent sessions only**; main keeps artifacts + approvals.
+- Every spawn includes **STACK** (`agent-stack`) — do not rely on parent rule inheritance.
+- Children may spawn `explorer` / helpers (with STACK); do not dump their raw output into main.
+- Plan stage is read-only; `dev-planner` must return Plan-mode-depth markdown with **Waves**.
+- Do not skip approval gates unless the user explicitly says so.
+- **Stage 2 visibility:** paste the entire Execution Plan markdown into the main chat before the approve prompt. Never `Execution Plan (summary)`, never approve-only with a subagent hyperlink. Caveman does not compress stage 1–2 artifacts. If Multitask forces background planner, on completion copy the plan body into chat — link alone = failed handoff.

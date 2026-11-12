@@ -1,0 +1,11 @@
+---
+description: Go naming, context/errors, and API/worker coding standards.
+globs: "**/*.{go,mod,sum}"
+alwaysApply: false
+---
+
+# Go standards
+
+Apply `coding-standards` references: `naming.md`, `coding.md`, plus `api-services.md` or `background-services.md` by command type (`cmd/api` vs `cmd/worker`).
+
+Hard requirements: `context.Context` first; wrap errors with `%w`; small packages; godoc on exported symbols.
