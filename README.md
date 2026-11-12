@@ -70,7 +70,7 @@ Cavecrew agents from the official install may appear alongside pipeline agents (
 |-------|------|
 | `coding-standards` | Universal + language + domain standards pack |
 | `dev-pipeline` | Orchestrate Task Card → plan → execute waves |
-| `explorer` | Codebase scout → Insight Brief |
+| `explorer` | Codebase scout → Insight Brief (**Serena first**; Grep only after Gaps) |
 | `change-handoff` | Branch/PR/commit impact docs |
 | `token-saviour` | Prefer Serena / rtk / caveman / Ponytail for fewer tokens |
 | `agent-stack` | STACK block for child agents |
@@ -81,7 +81,7 @@ Cavecrew agents from the official install may appear alongside pipeline agents (
 
 Pipeline:
 
-- `task-formatter`, `dev-planner`, `dev-executor`, `explorer`, `change-handoff`
+- `task-formatter`, `dev-planner`, `dev-executor`, `explorer` (Serena-first, behaviorally read-only), `change-handoff`
 
 Official Caveman may also add **Cavecrew** presets.
 

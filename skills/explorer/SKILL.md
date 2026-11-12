@@ -30,10 +30,14 @@ Delegate with a crisp prompt:
 Use the explorer subagent to scout <topic>.
 Need an Insight Brief for planning/execution: entrypoints, key files with line ranges,
 call flow, blast radius, risks, and a short task breakdown.
-Do not implement. Prefer Serena for symbols when available.
+Do not implement.
+HARD: Serena first — initial_instructions / activate_project, then
+get_symbols_overview + find_symbol + find_referencing_symbols before any Grep
+or whole-file Read. Grep only for string literals / errors after Serena Gaps.
+No Serena write tools. Return token-saviour tag.
 ```
 
-Pass any known hints (paths, error strings, tickets).
+Pass any known hints (paths, error strings, tickets). When spawning via Task, paste STACK and the Serena-hard line above — parent rules may not load in the child.
 
 ## How to consume the brief
 

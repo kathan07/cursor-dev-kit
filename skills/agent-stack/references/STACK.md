@@ -17,7 +17,7 @@ You run in an isolated session. Parent always-on rules may NOT apply. You MUST u
 | Completed-change docs | **change-handoff** | Branch/PR/commit handoff when asked; always writes `docs/<scope-slug>/<change-slug>.md` (docs-only) |
 
 Rules:
-1. Prefer Serena over mass Read/Grep for symbols.
+1. **Serena before Grep/mass Read** for symbols: `find_symbol` / `get_symbols_overview` / `find_referencing_symbols` (and declaration/implementations) first. Grep only for string literals, errors, or after Serena Gaps. Explorer: read Serena tools only — never `replace_*` / `rename_symbol` / memory writes.
 2. Prefer explorer over exploring in the parent thread.
 3. Prefer rtk for verbose command output.
 4. Prefer Ponytail on code writes; caveman on narration.
@@ -25,6 +25,7 @@ Rules:
 6. If a tool is missing, degrade to plain tools — never pretend it ran.
 7. Return only your stage artifact to the parent.
 8. When the parent prompt sets **CAVEMAN_OVERRIDE: off** for an approval artifact (Task Card / Execution Plan), that overrides the default “Prose → caveman” row for that artifact only — write full, reviewable markdown.
+9. Explorer agent uses `readonly: false` only so Serena MCP is callable (no `readOnlyHint` on those tools); behavior stays read-only.
 ```
 
 ## Agent frontmatter policy
