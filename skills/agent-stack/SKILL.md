@@ -1,35 +1,25 @@
 ---
 name: agent-stack
 description: >-
-  Mandatory token and quality stack for every Cursor agent and spawned child
-  subagent: Serena, rtk, explorer, caveman, Ponytail, token-saviour,
-  coding-standards, change-handoff. Use when writing or updating agents,
-  spawning Task/subagents, running the dev pipeline, or when children must
-  inherit stack access that always-on parent rules may not pass through.
+  Portable STACK for child subagents (Serena, rtk, explorer, caveman, Ponytail).
+  Use when spawning Task/subagents or updating agents. Kit agents embed STACK —
+  paste fence only for built-in explore/generalPurpose.
 ---
 
-# Agent stack (mandatory for children)
+# Agent stack
 
-Parent `alwaysApply` rules may **not** load inside spawned subagents. Treat this skill’s [references/STACK.md](references/STACK.md) as the **portable stack** every child must follow.
+Parent always-on rules may **not** load in spawned subagents. Portable stack: [references/STACK.md](references/STACK.md).
 
-## When spawning any subagent
+## When spawning
 
-1. Include the **STACK block** from `references/STACK.md` in the child prompt (or rely on it already embedded in `~/.cursor/agents/*.md`).
-2. Prefer agents that already embed STACK: `explorer`, `task-formatter`, `dev-planner`, `dev-executor`, `change-handoff`.
-3. If spawning `generalPurpose` / built-in `explore`, paste the STACK block into the Task prompt.
+1. Prefer kit agents that **embed** STACK — do **not** re-paste the fence.
+2. Built-in `explore` / `generalPurpose` → paste the STACK fence from `references/STACK.md`.
+3. Stage 1–2: include `CAVEMAN_OVERRIDE: off` for Task Card / Execution Plan.
 
-## Orchestrators (main / dev-pipeline)
+## Orchestrators
 
-- Keep main thin; children do heavy work **with STACK**.
-- Do not assume caveman/Ponytail/token-saviour rules auto-apply to children — STACK does.
-
-## Verify
-
-Child replies should behave as if STACK is active (Serena before mass Read; rtk on noisy shell; Ponytail on writes; caveman on prose).
+Main stays thin. Children do heavy work with STACK. Do not assume parent caveman/Ponytail/token-saviour rules apply to children.
 
 ## Models
 
-See [references/STACK.md](references/STACK.md) agent frontmatter policy:
-
-- Most agents: `auto-smart[optimize_for=cost]`
-- Planning only (`dev-planner`): `auto-smart[optimize_for=balanced]`
+See `references/STACK.md` frontmatter policy (`dev-planner` = balanced; others = cost).

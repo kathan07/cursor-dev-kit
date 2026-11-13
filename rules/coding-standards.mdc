@@ -1,32 +1,8 @@
 ---
-description: Apply coding-standards skill — universal, language, and domain packs by Job type / touched paths.
-alwaysApply: true
+description: Coding-standards packs by Job type/path. Short form in stack-router; chapters in skill coding-standards and repo .cursor/standards.
+alwaysApply: false
 ---
 
-# Coding standards routing
+# Coding standards (detail)
 
-Follow skill `coding-standards` (`~/.cursor/skills/coding-standards/`). Apply **universal** always; **language** when the stack is known; **domain** from Task Card Job type or touched paths. Do not invent idioms for unknown languages — use repo standards.
-
-## Enforce
-
-- Naming → `references/naming.md`
-- Branch / commit / PR → `references/git-pr-commit.md`
-- Comments → `references/comments.md` — WHY/contracts/invariants; native API docs; no narration of obvious code; actionable TODO/FIXME/HACK only
-- Style → `references/coding.md` (Universal + language chapters)
-- LLD → `references/lld-patterns.md` — catalog by Job type; Chosen **and** Rejected in plans
-- HTTP/gRPC APIs (`app`) → `references/api-services.md`
-- Workers / consumers / cron (`app`) → `references/background-services.md`
-- Scripts (`script`) → `references/scripting.md`
-- AI engineering (`ai-eng`) → `references/ai-engineering.md`
-- Cloud manifests / IaC (`cloud`) → `references/cloud-manifests.md`
-
-Language-specific rules (`coding-standards-dotnet.mdc`, `-go`, `-java`, `-node`) remain additive for those stacks.
-
-## Priority
-
-1. `CONTRIBUTING` and `.editorconfig` in the repo.
-2. `.cursor/standards/` when that folder exists. For each topic in Enforce, read `.cursor/standards/` with the same filename (including `scripting.md`, `ai-engineering.md`, `cloud-manifests.md`).
-3. This skill's `references/` when `.cursor/standards/` is absent.
-4. Ponytail (no extra layers).
-
-Read only the file(s) for the current language and Job type / service shape.
+Follow skill `coding-standards`. Repo `.cursor/standards/` wins over skill refs when present. Language glob rules (`coding-standards-node` etc.) remain additive.

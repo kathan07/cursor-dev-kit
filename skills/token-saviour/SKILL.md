@@ -1,15 +1,8 @@
 ---
 name: token-saviour
-description: >
-  Pick the most token-efficient tool for a coding task instead of reflexively reading whole
-  files, dumping raw command output into context, or writing more code than asked. Use this
-  skill BEFORE you explore or explain a codebase, locate a symbol/definition/callers, trace a
-  call path, map an architecture, plan or implement a feature across layers, or run verbose
-  commands (tests, builds, git, grep, directory listings) — and whenever context/token budget,
-  cost, or "make this use fewer tokens" comes up. It routes the scenario to serena, rtk,
-  caveman, Ponytail, or plain tools, with concrete commands and the combinations to use vs.
-  avoid. Reach for it even when the user doesn't name a tool: if you're about to `cat`/Read
-  several files, or about to generate a big implementation, that's the trigger.
+description: >-
+  Route tokens by layer: Serena (code-read), rtk (shell), caveman (prose),
+  Ponytail (code). Use before mass Read/Grep, noisy commands, or large writes.
 ---
 
 # token-saviour: spend tokens where they matter

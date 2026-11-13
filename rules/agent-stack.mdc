@@ -1,22 +1,8 @@
 ---
-description: Ensure spawned child agents get Serena/rtk/caveman/Ponytail/token-saviour/coding-standards stack.
-alwaysApply: true
+description: Child STACK paste policy — prefer agents that embed STACK; paste fence only for built-in explore/generalPurpose. See skill agent-stack.
+alwaysApply: false
 ---
 
-# Child agent stack access
+# Agent stack (detail)
 
-Spawned subagents may **not** inherit always-on rules. Give them stack access explicitly.
-
-## When spawning Task / any subagent
-
-1. Prefer `~/.cursor/agents/*` agents (they embed STACK).
-2. Paste the STACK block from skill `agent-stack` → `references/STACK.md` into the child prompt (dev-pipeline templates already include it).
-3. For built-in `explore` / `generalPurpose`, always paste STACK.
-
-## Stack tools children must use
-
-Serena · rtk · explorer · caveman · Ponytail · token-saviour · coding-standards · change-handoff (when documenting)
-
-Do not assume parent caveman/Ponytail/token-saviour rules alone cover children.
-
-When the parent sets `CAVEMAN_OVERRIDE: off` (dev-pipeline stages 1–2 approval artifacts), that overrides STACK prose for that artifact only.
+Use skill `agent-stack` and `references/STACK.md`. Prefer kit agents with embedded STACK; paste fence only for built-in `explore` / `generalPurpose`. `CAVEMAN_OVERRIDE: off` wins for stage 1–2 artifacts.

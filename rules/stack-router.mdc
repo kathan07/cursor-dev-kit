@@ -1,0 +1,54 @@
+---
+description: >-
+  Token/quality stack router: Serena/rtk/caveman/Ponytail, child STACK, pipeline
+  orchestrator hard rules. Full detail lives in skills — keep this rule short.
+alwaysApply: true
+---
+
+# Stack router
+
+## Layers (pick one per cost)
+
+| Layer | Tool | Do |
+|-------|------|-----|
+| Code-read / symbol edit | **Serena** | Symbol tools before mass Read/Grep |
+| Shell noise | **rtk** | Prefix noisy cmds |
+| Prose | **caveman** | Terse chat; code/paths/errors verbatim |
+| Code write | **Ponytail** | YAGNI; min diff; keep validation/security |
+| Multi-file scout | **explorer** | Insight Brief — no Grep dump in main |
+| Docs | **change-handoff** | On handoff/impact ask → `docs/<scope>/<slug>.md` |
+
+Trivial one-file lookup → plain tools. Missing tool → degrade; never pretend.
+
+## Ponytail (writes)
+
+Understand flow first. Then first rung that holds: YAGNI → reuse → stdlib → platform → dep → one-liner → min code. Root-cause bug fixes. No unrequested abstractions. Full ladder: skill `ponytail`.
+
+## Standards
+
+Universal always; language/domain by Job type or path. Priority: `CONTRIBUTING`/`.editorconfig` → `.cursor/standards/` → skill `coding-standards` refs. Read only needed chapters. Glob language rules stay additive.
+
+## Child spawn (STACK)
+
+1. Prefer `~/.cursor/agents/*` that **embed** STACK — do **not** re-paste the full STACK fence.
+2. Built-in `explore` / `generalPurpose` → paste fence from skill `agent-stack` → `references/STACK.md`.
+3. Parent always-on rules do **not** apply inside children.
+
+## Dev pipeline (orchestrator)
+
+Triggers: “dev pipeline”, unstructured build-with-approvals, or chat already has Task Card / Execution Plan.
+
+Flow: `task-formatter` sync → full Task Card approve → Plan mode + `dev-planner` sync → **paste full plan** approve → execute signals → `dev-executor` per wave → optional `change-handoff`.
+
+**Stage 1–2:** `CAVEMAN_OVERRIDE: off` — full Task Card / Execution Plan in chat (never summary-only / link-only).
+
+**Execute signals** (Build / approve-after-plan / implement / continue / SwitchMode agent after plan): first tool call = Task `dev-executor` for assigned wave. Main = orchestrator only.
+
+**Main MUST NOT** while executing: edit product code, finish leftover waves inline, skip Task, parallel executors, re-plan unless `revise`.
+
+Full templates: skill `dev-pipeline`.
+
+## Explorer / handoff triggers
+
+- Broad multi-file / unclear ownership / before plan → spawn `explorer`.
+- Handoff / impact / change doc for branch|PR|commits → spawn `change-handoff`.

@@ -37,7 +37,7 @@ or whole-file Read. Grep only for string literals / errors after Serena Gaps.
 No Serena write tools. Return token-saviour tag.
 ```
 
-Pass any known hints (paths, error strings, tickets). When spawning via Task, paste STACK and the Serena-hard line above — parent rules may not load in the child.
+Pass any known hints (paths, error strings, tickets). Prefer kit `explorer` agent (STACK embedded). Paste STACK fence only if using built-in explore/generalPurpose. Always include the Serena-hard line when relevant.
 
 ## How to consume the brief
 

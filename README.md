@@ -73,7 +73,8 @@ Cavecrew agents from the official install may appear alongside pipeline agents (
 | `explorer` | Codebase scout → Insight Brief (**Serena first**; Grep only after Gaps) |
 | `change-handoff` | Branch/PR/commit impact docs |
 | `token-saviour` | Prefer Serena / rtk / caveman / Ponytail for fewer tokens |
-| `agent-stack` | STACK block for child agents |
+| `agent-stack` | STACK fence for built-in explore/generalPurpose |
+| `ponytail` | Full YAGNI ladder (short form in stack-router) |
 
 `skills/caveman/` remains in this repo as a **reference copy only**; live Caveman comes from the official installer.
 
@@ -85,13 +86,15 @@ Pipeline:
 
 Official Caveman may also add **Cavecrew** presets.
 
-## Always-on rules
+## Always-on rules (Lean meta)
 
 Installed under `~/.cursor/rules/`:
 
-- `agent-stack`, `token-saviour`, `ponytail`
-- `coding-standards` (+ node / go / java / dotnet packs)
-- `explorer`, `dev-pipeline`, `change-handoff`
+- **`stack-router.mdc`** (`alwaysApply: true`) — sole fat every-turn rule: layer table, Ponytail short form, STACK paste policy, pipeline MUST/MUST NOT, explorer/handoff triggers
+- Detail stubs (`alwaysApply: false`): `agent-stack`, `token-saviour`, `ponytail`, `coding-standards`, `explorer`, `dev-pipeline`, `change-handoff` — skill bodies hold full text
+- Language packs (glob): `coding-standards-node` / `-go` / `-java` / `-dotnet`
+
+Kit pipeline agents **embed** STACK — parents must not re-paste the full fence (paste only for built-in `explore` / `generalPurpose`). Stage 1–2 stay full text (`CAVEMAN_OVERRIDE: off`).
 
 Caveman always-on = **official session hook**, not a kit `.mdc`.
 
@@ -112,7 +115,7 @@ Example Serena MCP snippet: [`mcp/serena.mcp.json.example`](mcp/serena.mcp.json.
 
 ```text
 skills/          # Kit skills (caveman/ is reference-only for install)
-rules/           # Always-on .mdc rules (no caveman.mdc)
+rules/           # stack-router always-on + demoted stubs (no caveman.mdc)
 agents/          # Pipeline subagents
 mcp/             # MCP examples
 install.sh       # Cleanup + kit copy + official Caveman + Serena

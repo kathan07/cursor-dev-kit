@@ -1,54 +1,8 @@
 ---
-description: Route coding tasks to the most token-efficient tool.
-alwaysApply: true
+description: Route code-read→Serena, shell→rtk, prose→caveman, code→Ponytail. See skill token-saviour.
+alwaysApply: false
 ---
 
-# token-saviour
+# token-saviour (detail)
 
-Before acting, identify which layer the task stresses.
-
-## Code reading
-Use Serena MCP first for:
-- finding symbols
-- understanding callers/call paths
-- understanding architecture
-- semantic code navigation
-- semantic edits/renames
-
-Avoid reading many files with cat/grep when Serena can answer.
-
-## Command output
-Use RTK for:
-- git
-- tests
-- builds
-- grep/find
-- kubectl
-- other noisy shell commands
-
-## Generated prose
-Use Caveman-style concise responses for explanations and summaries.
-
-Do NOT use prose compression on code, configuration, errors, commands, or structured output.
-
-## Generated code
-Follow Ponytail principles:
-- implement only what was requested
-- prefer existing project patterns
-- don't introduce abstractions without need
-- don't add unnecessary files
-- don't add speculative error handling
-- don't refactor unrelated code
-
-## Routing rules
-Do not use multiple tools for the same layer unnecessarily.
-
-Prefer:
-Serena → code understanding
-RTK → command output
-Caveman → prose
-Ponytail → implementation discipline
-
-If a tool is unavailable, fall back to the normal Cursor tool.
-
-Keep responses concise and report which token-saving tool/layer was used when relevant.
+See always-on `stack-router.mdc` and skill `token-saviour` for the full decision guide.

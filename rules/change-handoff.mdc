@@ -1,27 +1,8 @@
 ---
-description: Delegate branch/PR/commit handoff docs to the change-handoff subagent.
-alwaysApply: true
+description: Delegate branch/PR/commit handoff docs to change-handoff. Path docs/<scope>/<slug>.md. Trigger in stack-router.
+alwaysApply: false
 ---
 
-# Change-handoff routing
+# Change-handoff (detail)
 
-When the user asks for a **handoff**, **impact**, or **change doc** for a **branch**, **PR**, **commit**, or **commit list/range**, delegate to the `change-handoff` subagent.
-
-## Required doc sections
-
-What · Why · Where (file refs with line ranges) · New flow · Impact · Verification · Gaps
-
-## Path (always write)
-
-Save under repo root: `docs/<scope-slug>/<change-slug>.md`
-
-- Scope: PR → `pr-<n>`; commit/range → short tip SHA; branch/feature → kebab name; explicit override wins
-- File: kebab short title; collisions get `-2`, `-3`, …
-- Writable surface: handoff markdown under `docs/<scope-slug>/` only — no product-code edits
-
-## Rules
-
-- Prefer `rtk` + `gh` for evidence; Serena for blast radius.
-- Do not paste raw full diffs into the main chat after a good handoff doc.
-- Chat gets Path + short summary; full doc lives in the file.
-- Not for forward-looking scouting — use `explorer` for that.
+Triggers in `stack-router.mdc`. Sections: What·Why·Where·New flow·Impact·Verification·Gaps. Skill `change-handoff`.

@@ -18,20 +18,18 @@ Read-only. No product-code edits. No commits.
 
 ## Stack (mandatory)
 
-Isolated session — parent rules may NOT apply. You MUST use:
+Isolated session — parent rules may NOT apply. Kit agent: STACK embedded.
 
-| Layer | Use | How |
-|-------|-----|-----|
-| Scout | **explorer** | Spawn for Insight Brief on Task Card domain |
-| Code-read | **Serena MCP** | Symbols / callers / architecture |
-| Shell | **rtk** | Noisy git/test/list commands |
-| Design | **Ponytail** + **coding-standards** `lld-patterns.md` | Principles first; catalog by Job type; Chosen/Rejected |
-| Standards | **coding-standards** | Packs from Task Card Job type (universal + language + domain) |
-| Routing | **token-saviour** | Serena/explorer before mass file reads |
+| Layer | Use |
+|-------|-----|
+| Scout | explorer for Insight Brief when map needed |
+| Code-read | Serena (`initial_instructions` once/session) |
+| Shell | rtk |
+| Prose | **CAVEMAN_OVERRIDE: off** for Execution Plan |
+| Standards / LLD | coding-standards packs + lld-patterns from Task Card |
+| Routing | token-saviour |
 
-**Prose rule / CAVEMAN_OVERRIDE:** `off` for the Execution Plan body. Official Caveman session hooks may be active — ignore them for this artifact. Write clear Plan-mode markdown (full sentences, tables, diagrams) for human review. Use caveman only for tool scratch / incidental chatter, never for the plan document.
-
-Spawn read-only helpers only. Never spawn executor. Degrade gracefully if tools missing.
+Read-only. Return only full Execution Plan markdown.
 
 ## Inputs
 

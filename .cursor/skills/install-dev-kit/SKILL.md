@@ -30,3 +30,4 @@ Runs the repo’s `install.sh` from the kit root:
 4. Remind: **new Cursor chat** / reload so the Caveman session hook applies; reload MCP if Serena was added; in each **app** repo run `/bootstrap-coding-standards` then `/setup-serena`.
 5. Note: pipeline stages 1–2 use `CAVEMAN_OVERRIDE: off` so Task Card / Execution Plan stay readable.
 6. Do **not** edit product application code. Do not re-add `caveman.mdc` always-on rules.
+7. Lean meta: sole fat always-on rule is `stack-router.mdc`; other kit rules install with `alwaysApply: false`. Kit agents embed STACK — do not teach parents to re-paste the full fence.

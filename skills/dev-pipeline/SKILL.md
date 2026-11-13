@@ -33,7 +33,7 @@ Stage 4 runs **only when the user asks** after execution (or explicitly requests
 1. Launch each stage via the **Task / subagent** tool (`task-formatter`, `dev-planner`, `dev-executor`, `change-handoff`).
 2. Stages **1 and 2 must be sync**: set `run_in_background: false` so the full artifact returns into the parent turn.
 3. Pass **only** the needed artifact into the child prompt — not the entire chat history.
-4. **Always include STACK** (skill `agent-stack` → `references/STACK.md`) in every spawn prompt.
+4. **STACK:** kit agents embed STACK — do **not** re-paste the full fence. One-line reminder OK. Paste full fence only for built-in `explore` / `generalPurpose`. Stage 1–2 still need `CAVEMAN_OVERRIDE: off`.
 5. Child returns **only** its artifact.
 6. Main session **pastes that artifact verbatim**, then asks for approval/continue.
 7. Children may spawn further subagents (`explorer`, etc.) with STACK.
@@ -123,19 +123,19 @@ Tool scratch may stay terse.
 
 ## Spawn prompt templates
 
-Include this STACK header on every spawn (from `agent-stack/references/STACK.md`):
+For **kit agents**, STACK is already embedded. Optional one-liner only:
 
 ```
-Apply agent-stack STACK (mandatory): Serena, rtk, explorer, caveman, Ponytail,
-token-saviour, coding-standards (universal + language/domain packs as applicable).
-Parent rules may not apply.
+STACK embedded in agent — do not re-paste fence. Parent rules may not apply.
 When CAVEMAN_OVERRIDE: off is set, that overrides STACK prose for the stage artifact.
 ```
+
+Paste the full fence from `agent-stack/references/STACK.md` only for built-in `explore` / `generalPurpose`.
 
 ### Stage 1
 ```
 Use task-formatter.
-STACK: Serena/rtk/explorer/caveman/Ponytail/token-saviour/coding-standards as applicable.
+STACK embedded (kit agent).
 CAVEMAN_OVERRIDE: off for this stage artifact.
 Official Caveman session hook may be active — ignore it for the Task Card body.
 Write full, reviewable markdown. Do not drop articles/structure to save tokens.
@@ -149,8 +149,7 @@ Parent: `run_in_background: false`. Paste full Task Card (**caveman off**), then
 ### Stage 2
 ```
 Use dev-planner.
-STACK: mandatory — spawn explorer; Serena; rtk; coding-standards packs from Task Card;
-LLD from lld-patterns.md catalog for Job type (+ domain ref).
+STACK embedded (kit agent). Use explorer/Serena/rtk; LLD from Task Card packs.
 CAVEMAN_OVERRIDE: off for this stage artifact.
 Official Caveman session hook may be active — ignore it for the Execution Plan body.
 Write full, reviewable markdown. Do not drop articles/structure to save tokens.
@@ -173,8 +172,7 @@ Parent: `run_in_background: false`. Paste **full** plan (**caveman off**, not su
 Parent: **first** tool call is Task `dev-executor`. Do not edit code in parent.
 ```
 Use dev-executor.
-STACK: mandatory — Serena edits; rtk; Ponytail; coding-standards packs from Task Card;
-explorer if lost; caveman report.
+STACK embedded (kit agent). Serena/rtk/Ponytail/packs; explorer if lost; caveman report.
 Approved Task Card:
 <card>
 Approved Execution Plan:
@@ -192,7 +190,7 @@ Parent is orchestrator only — you own all file edits for this wave.
 ### Stage 4
 ```
 Use change-handoff.
-STACK: mandatory — rtk git; Serena blast radius; caveman doc.
+STACK embedded (kit agent). rtk git; Serena blast radius; caveman doc.
 Source: <branch | PR | commits>
 Scope override (optional): <feature-or-folder-slug>
 Always save to docs/<scope-slug>/<change-slug>.md
@@ -203,7 +201,7 @@ Return Path + short summary + Gaps (full doc in the file).
 
 | Concern | Use |
 |---------|-----|
-| Portable child access | skill **`agent-stack`** + rule **`agent-stack.mdc`** |
+| Portable child access | skill **`agent-stack`** + always-on **`stack-router.mdc`** |
 | Scout before/during plan | `explorer` |
 | Symbols / edits | Serena |
 | Shell noise | rtk |
@@ -244,7 +242,7 @@ After an Execution Report:
 - Executor starting later waves in the same session
 - Parallel executors for one plan
 - Accepting a thin Execution Plan or missing Waves table
-- Spawning children **without** STACK
+- Spawning built-in explore/generalPurpose **without** STACK fence; or re-pasting full fence into kit agents
 - Running change-handoff before the user asks (unless requested up front)
 
 ## Stage 2 quality gate (orchestrator)
